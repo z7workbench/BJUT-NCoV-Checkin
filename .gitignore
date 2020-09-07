@@ -1,3 +1,5 @@
 /venv/
 /.idea/
 userpass.json
+/__pycache__/
+*.pyc
