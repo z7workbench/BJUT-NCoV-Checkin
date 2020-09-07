@@ -9,7 +9,11 @@ def get_user_pass(args):
         print('Detected JSON file, loading...')
         with open('./userpass.json', 'r') as f:
             js = load(f)
-        return js['user'], js['pass']
+        if js['user'] is None or js['pass'] is None:
+            print('Cannot find data, use args instead')
+            return args.user, args.password
+        else:
+            return js['user'], js['pass']
     else:
         print('JSON file is missing, use args instead.')
         return args.user, args.password
@@ -54,4 +58,7 @@ if __name__ == '__main__':
     parser.add_argument('--headless', action='store_false')
     args = parser.parse_args()
     username, password = get_user_pass(args)
+    if username is None or password is None:
+        print('What?? Why don\'t you enter name and password?? You are a genius! ')
+        exit(1)
     browse(username, password, args)
