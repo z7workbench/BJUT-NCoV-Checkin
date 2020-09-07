@@ -1,4 +1,8 @@
 from selenium import webdriver
+from selenium.common.exceptions import ElementClickInterceptedException
+from selenium.webdriver.support import expected_conditions as EC
+from selenium.webdriver.common.by import By
+from selenium.webdriver.support.wait import WebDriverWait
 import argparse
 import os
 from json import load
@@ -14,6 +18,7 @@ def get_user_pass(args):
             print('Cannot find data, use args instead')
             return args.username, args.password
         else:
+            print('Load completed.')
             return js['user'], js['pass']
     else:
         print('JSON file is missing, use args instead.')
@@ -27,20 +32,34 @@ def browse(username, password, args):
             options.add_argument('--headless')
         options.add_argument('--disable-gpu')
         driver = webdriver.Chrome(options=options)
-    elif args.driver == 'gecko' or args.driver == 'firefox':
+    elif args.driver == 'gecko' or 'firefox':
         options = webdriver.FirefoxOptions()
         if args.headless:
             options.add_argument('--headless')
         options.add_argument('--disable-gpu')
         driver = webdriver.Firefox(options=options)
+    elif args.driver == 'edge' or 'edgehtml':
+        driver = webdriver.Edge()
     else:
-        print('Invalid driver name, use "--driver=gecko" or "--driver=chrome" instead. ')
+        print('Invalid driver name, use "--driver=gecko", "--driver=chrome", '
+              '"--driver=edge" or "--driver=edgehtml" instead. ')
         return
     ncov_default = 'https://itsapp.bjut.edu.cn/ncov/wap/default/index'
     login(driver, username, password)
     driver.get(ncov_default)
     driver.find_element_by_xpath('/html/body/div[1]/div/div/section/div[4]/ul/li[7]/div/input').click()
-    driver.find_element_by_xpath('/html/body/div[1]/div/div/section/div[5]/div/a').click()
+    # TODO: Get location
+    # TODO: Failed get location and write address
+    try:
+        element = WebDriverWait(driver, 5, 0.5).until(
+            EC.element_to_be_clickable((By.XPATH, '/html/body/div[1]/div/div/section/div[5]/div/a'))
+        )
+    except ElementClickInterceptedException:
+        driver.quit()
+        print('failed!')
+        return
+    # TODO: Daily Report can only be submitted once a day. You have already submitted
+    element.click()
     # Missing one click!!
     # driver.find_element_by_xpath('').click()
     driver.quit()
@@ -54,10 +73,12 @@ if __name__ == '__main__':
                         help='Enter your password, this program will not store your password.')
     parser.add_argument('-d', '--driver', required=True, type=str,
                         help='Choose your driver, Available choices: "chrome" for chromedriver,'
-                             '"firefox" or "gecko" for geckodriver (Firefox).')
-    parser.add_argument('--headless', action='store_false',
+                             '"firefox" or "gecko" for geckodriver (Firefox), "edge" for '
+                             'Chromium Microsoft Edge, "edgehtml" for Legacy Edge.')
+    parser.add_argument('--headless', action='store_true',
                         help='Use Headless web browser. If you want to see the browser window, '
-                             'do not use this argument.')
+                             'do not use this argument. This argument is invalid when using '
+                             'Edge.')
     args = parser.parse_args()
     username, password = get_user_pass(args)
     if username is None or password is None:
