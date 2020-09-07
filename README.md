@@ -27,7 +27,10 @@ You need:
 ## How to use?
 I suggest using ``virtualenv`` to create the environment by exectuing
 ```
-pip install virtualenv or python -m pip install virtualenv
+// install virtualenv
+pip install virtualenv
+// if it does not working, try pypi mirrors or use:
+python -m pip install virtualenv
 virtualenv venv
 ```
 Copy browser driver (chromedriver or geckodriver) to PATH or``.\venv\Script`` for Windows and ``./venv/bin`` for Linux.
@@ -43,11 +46,12 @@ Install packages
 ```
 pip install selenium
 ```
-Then run
+### Daily check in
+Run
 ```
 python checkin.py -u <username> -p <password> -d <chrome|firefox|gecko>
 ```
-If you don't want to type username and password every time, you can create a JSON file named ``userpass.json`` in the repository's root. In ``userpass.json``
+If you don't want to type username and password every time, you can create a JSON file named ``userpass.json`` in the repository's root. In ``userpass.json``, you need to type
 ```
 {
   "user": "xxx",
