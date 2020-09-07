@@ -2,6 +2,7 @@ from selenium import webdriver
 import argparse
 import os
 from json import load
+from utils import login
 
 
 def get_user_pass(args):
@@ -35,13 +36,8 @@ def browse(username, password, args):
     else:
         print('Invalid driver name, use "--driver=gecko" or "--driver=chrome" instead. ')
         return
-    login_url = 'https://itsapp.bjut.edu.cn/uc/wap/login'
     ncov_default = 'https://itsapp.bjut.edu.cn/ncov/wap/default/index'
-
-    driver.get(login_url)
-    driver.find_element_by_xpath('/html/body/div[1]/div[2]/div[1]/input').send_keys(username)
-    driver.find_element_by_xpath('/html/body/div[1]/div[2]/div[2]/input').send_keys(password)
-    driver.find_element_by_xpath('/html/body/div[1]/div[3]').click()
+    login(driver, username, password)
     driver.get(ncov_default)
     driver.find_element_by_xpath('/html/body/div[1]/div/div/section/div[4]/ul/li[7]/div/input').click()
     driver.find_element_by_xpath('/html/body/div[1]/div/div/section/div[5]/div/a').click()
