@@ -21,13 +21,13 @@ def get_user_pass(args):
 
 
 def browse(username, password, args):
-    if args.dr == 'chrome':
+    if args.driver == 'chrome':
         options = webdriver.ChromeOptions()
         if args.headless:
             options.add_argument('--headless')
         options.add_argument('--disable-gpu')
         driver = webdriver.Chrome(options=options)
-    elif args.dr == 'gecko' or args.dr == 'firefox':
+    elif args.driver == 'gecko' or args.driver == 'firefox':
         options = webdriver.FirefoxOptions()
         if args.headless:
             options.add_argument('--headless')
