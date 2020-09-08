@@ -1,7 +1,7 @@
 # BJUT-NCoV-Checkin
 BJUT daily check-in script using Selenium, written in Python
 
-**PLEASE NOTICE:** if you feel sick or have fever, **DO NOT USE THIS SCRIPT AND REPORT TO YOUR MENTOR OR TEACHER IMMEDIATELY!!** This repository just simplify the check-in proceduce!!!
+**PLEASE NOTICE:** if you feel sick or have fever, **DO NOT USE THIS SCRIPT AND REPORT TO YOUR MENTOR OR TEACHER IMMEDIATELY!!** This repository just simplifies the check-in proceduce!!!
 
 This script will use your **previous settings**, so please be careful.
 
@@ -23,6 +23,8 @@ You need:
   - [Chromedriver for Chromium and Google Chrome](https://chromedriver.chromium.org/downloads) or [Taobao mirror](http://npm.taobao.org/mirrors/chromedriver)
   - [geckodriver for Firefox](https://github.com/mozilla/geckodriver/releases)
 - Python 3.6 and above
+
+Chrome and Firefox supports are available on Linux. Other drivers and platforms are not tested.
 
 ## How to use?
 I suggest using ``virtualenv`` to create the environment by exectuing
