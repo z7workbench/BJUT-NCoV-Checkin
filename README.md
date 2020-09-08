@@ -35,6 +35,8 @@ virtualenv venv
 ```
 Copy browser driver (chromedriver or geckodriver) to PATH or``.\venv\Script`` for Windows and ``./venv/bin`` for Linux.
 
+If you are using Linux, please use ``chmod a+x <driver>`` to make the driver excutable.
+
 Then activate
 ```
 Windows:

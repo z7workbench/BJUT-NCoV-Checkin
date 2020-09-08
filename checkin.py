@@ -4,6 +4,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.wait import WebDriverWait
 import argparse
+import time
 import os
 from json import load
 from utils import login
@@ -46,6 +47,7 @@ def browse(username, password, args):
         return
     ncov_default = 'https://itsapp.bjut.edu.cn/ncov/wap/default/index'
     login(driver, username, password)
+    time.sleep(2)
     driver.get(ncov_default)
     driver.find_element_by_xpath('/html/body/div[1]/div/div/section/div[4]/ul/li[7]/div/input').click()
     # TODO: Get location
@@ -60,8 +62,16 @@ def browse(username, password, args):
         return
     # TODO: Daily Report can only be submitted once a day. You have already submitted
     element.click()
-    # Missing one click!!
-    # driver.find_element_by_xpath('').click()
+    try:
+        element = WebDriverWait(driver, 5, 0.5).until(
+            EC.element_to_be_clickable((By.XPATH, '/html/body/div[4]/div/div[2]/div[2]'))
+        )
+    except ElementClickInterceptedException:
+        driver.quit()
+        print('failed!')
+        return
+    element.click()
+    print('Success!')
     driver.quit()
 
 
