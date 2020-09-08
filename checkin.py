@@ -27,6 +27,7 @@ def get_user_pass(args):
 
 
 def browse(username, password, args):
+    # configure the driver
     if args.driver == 'chrome':
         options = webdriver.ChromeOptions()
         if args.headless:
@@ -39,19 +40,22 @@ def browse(username, password, args):
             options.add_argument('--headless')
         options.add_argument('--disable-gpu')
         driver = webdriver.Firefox(options=options)
-    elif args.driver == 'edge' or 'edgehtml':
-        driver = webdriver.Edge()
+    # TODO Edge support
+    # elif args.driver == 'edge' or 'edgehtml':
+    #     driver = webdriver.Edge()
     else:
-        print('Invalid driver name, use "--driver=gecko", "--driver=chrome", '
-              '"--driver=edge" or "--driver=edgehtml" instead. ')
+        print('Invalid driver name, use "--driver=gecko", "--driver=firefox", "--driver=chrome"')
+              # '"--driver=edge" or "--driver=edgehtml" instead. ')
         return
     ncov_default = 'https://itsapp.bjut.edu.cn/ncov/wap/default/index'
+    # log in the account
     login(driver, username, password)
     time.sleep(2)
+    # enter the page
     driver.get(ncov_default)
+    # click the location input
     driver.find_element_by_xpath('/html/body/div[1]/div/div/section/div[4]/ul/li[7]/div/input').click()
-    # TODO: Get location
-    # TODO: Failed get location and write address
+    # wait some time then click the submit button
     try:
         element = WebDriverWait(driver, 5, 0.5).until(
             EC.element_to_be_clickable((By.XPATH, '/html/body/div[1]/div/div/section/div[5]/div/a'))
@@ -61,7 +65,9 @@ def browse(username, password, args):
         print('failed!')
         return
     # TODO: Daily Report can only be submitted once a day. You have already submitted
+    time.sleep(1)
     element.click()
+    # confirm
     try:
         element = WebDriverWait(driver, 5, 0.5).until(
             EC.element_to_be_clickable((By.XPATH, '/html/body/div[4]/div/div[2]/div[2]'))
@@ -70,6 +76,7 @@ def browse(username, password, args):
         driver.quit()
         print('failed!')
         return
+    time.sleep(1)
     element.click()
     print('Success!')
     driver.quit()

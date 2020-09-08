@@ -5,7 +5,7 @@ BJUT daily check-in script using Selenium, written in Python
 
 This script will use your **previous settings**, so please be careful.
 
-I **am** working on it. It may not work. Please open issuses when you meet bugs. The first version will be released in Sep 8, 2020.
+I **am** working on it. Chrome and Firefox are available on Linux and Windows. Other drivers are not tested. I do not have a Mac, so I cannot test it on Mac. If you use macOS and meet some bugs, please commit a issue. 
 
 ## Why do you create this repository?
 - This is my first time using Selenium;
@@ -20,11 +20,9 @@ I am thinking about it! Recently I re-design that app, so it will take a while.
 You need:
 - Google Chrome (or other chromium brower) or Firefox installed on your computer
 - Driver for Chrome or Firefox
-  - [Chromedriver for Chromium and Google Chrome](https://chromedriver.chromium.org/downloads) or [Taobao mirror](http://npm.taobao.org/mirrors/chromedriver)
+  - [chromedriver for Chromium and Google Chrome](https://chromedriver.chromium.org/downloads) or [Taobao mirror](http://npm.taobao.org/mirrors/chromedriver)
   - [geckodriver for Firefox](https://github.com/mozilla/geckodriver/releases)
 - Python 3.6 and above
-
-Chrome and Firefox supports are available on Linux. Other drivers and platforms are not tested.
 
 ## How to use?
 I suggest using ``virtualenv`` to create the environment by exectuing
